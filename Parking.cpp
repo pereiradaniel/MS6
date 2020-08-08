@@ -7,7 +7,7 @@
 #include "Utils.h"
 using namespace std;
 namespace sdds {
-	Parking::Parking(const char* datafile) :
+	Parking::Parking(const char* datafile, int lotSize) :
 		m_datafile(nullptr),
 		m_parkingMenu("Parking Menu, select an action:"),
 		m_vehicleMenu("Select type of the vehicle:", 1) {

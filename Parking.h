@@ -10,9 +10,9 @@ namespace sdds {
 		char*	m_datafile;						// may be nullptr -> Parking in empty state
 		Menu	m_parkingMenu;
 		Menu	m_vehicleMenu;
-		int		m_lotSize;						// new
-		int		m_Vcnt;							// new
-		Vehicle* m_parkingSpots[MAX_LOT_SIZE];	// new
+		int		m_lotSize;						// new	- number of spots
+		int		m_Vcnt;							// new	- number of parked vehicles
+		Vehicle* m_parkingSpots[MAX_LOT_SIZE];	// new	- Parking Spots.
 	private:
 		bool	isEmpty() const;				// no changes
 		void	setEmpty();						// no changes
