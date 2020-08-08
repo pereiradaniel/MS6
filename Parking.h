@@ -7,12 +7,12 @@ namespace sdds {
 	const int	MAX_LOT_SIZE = 100;
 	class Parking {
 	private:
-		char* m_datafile;				// may be nullptr -> Parking in empty state
+		char*	m_datafile;						// may be nullptr -> Parking in empty state
 		Menu	m_parkingMenu;
 		Menu	m_vehicleMenu;
-		int		m_lotSize;
-		int		m_Vcnt;
-		Vehicle* m_parkingSpots[MAX_LOT_SIZE];
+		int		m_lotSize;						// new
+		int		m_Vcnt;							// new
+		Vehicle* m_parkingSpots[MAX_LOT_SIZE];	// new
 	private:
 		bool	isEmpty() const;				// no changes
 		void	setEmpty();						// no changes
