@@ -10,7 +10,7 @@ namespace sdds {
 		char* m_datafile;				// may be nullptr -> Parking in empty state
 		Menu	m_parkingMenu;
 		Menu	m_vehicleMenu;
-		int		m_litSize;
+		int		m_lotSize;
 		int		m_Vcnt;
 		Vehicle* m_parkingSpots[MAX_LOT_SIZE];
 	private:
