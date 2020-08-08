@@ -19,7 +19,7 @@ namespace sdds {
 		void	parkingStatus() const;			// modify - modified but not tested
 		void	parkVehicle();					// modify - modified but not tested
 		void	returnVehicle();				// modify - modified but not tested
-		void	listParkedVehicles();			// modify
+		void	listParkedVehicles();			// modify - modified but not tested
 		bool	closeParking();					// modify
 		bool	exitParkingApp();				// no changes
 		bool	load();							// modify

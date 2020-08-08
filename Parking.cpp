@@ -47,11 +47,6 @@ namespace sdds {
 		}
 	}
 
-	void Parking::listParkedVehicles() {
-		// message + EOL
-		cout << "Listing Parked Vehicles" << endl;
-	}
-
 	bool Parking::closeParking() {
 		// message + EOL
 		cout << "Closing Parking" << endl;
@@ -188,6 +183,17 @@ namespace sdds {
 			m_parkingSpots[index]->write(std::cout);
 			delete m_parkingSpots[index];
 			m_parkingSpots[index] = nullptr;
+		}
+	}
+
+	void Parking::listParkedVehicles() {
+		// message + EOL
+		cout << "Listing Parked Vehicles" << endl;
+		for (int i = 0; i < m_lotSize; i++) {
+			if (m_parkingSpots[i] != nullptr) {
+				m_parkingSpots[i]->write(std::cout);
+				cout << "--------------------------------------------------------------" << endl;
+			}
 		}
 	}
 
