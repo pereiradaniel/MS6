@@ -33,7 +33,7 @@ namespace sdds {
 		Parking(const Parking&) = delete;
 		void operator=(const Parking&) = delete;
 		int run();										// no changes
-		~Parking();										// modified
+		~Parking();										// modified - changed but not tested
 	};
 }
 #endif
