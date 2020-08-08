@@ -16,7 +16,7 @@ namespace sdds {
 	private:
 		bool	isEmpty() const;				// no changes
 		void	setEmpty();						// no changes
-		void	parkingStatus() const;			// modify
+		void	parkingStatus() const;			// modify - modified but not tested
 		void	parkVehicle();					// modify
 		void	returnVehicle();				// modify
 		void	listParkedVehicles();			// modify
