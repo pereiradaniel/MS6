@@ -5,6 +5,8 @@
 #include <iomanip>
 #include "Parking.h"
 #include "Utils.h"
+#include "Car.h"
+#include "Motorcycle.h"
 using namespace std;
 namespace sdds {
 	Parking::Parking(const char* datafile, int noOfSpots) :
@@ -45,27 +47,6 @@ namespace sdds {
 		}
 	}
 
-	void Parking::parkVehicle() {
-		// run the vehicle menu save the user's choice
-		int selection = 0;
-		m_vehicleMenu.display();
-		if (!isEmpty()) {
-			cin >> selection;
-
-			switch (selection) {
-			case 1:
-				cout << "Parking Car" << endl;
-				break;
-			case 2:
-				cout << "Parking Motorcycle" << endl;
-				break;
-			case 3:
-				cout << "Cancelled parking" << endl;
-				break;
-			}
-		}
-	}
-
 	void Parking::returnVehicle() {
 		// message + EOL
 		cout << "Returning Vehicle" << endl;
@@ -99,6 +80,77 @@ namespace sdds {
 		cout << "Available spots: ";
 		cout << cout.setf(ios::left) << cout.width(4) << m_lotSize - m_Vcnt;
 		cout << cout.setf(ios::right) << " *****" << endl;
+	}
+
+	void Parking::parkVehicle() {
+		// run the vehicle menu save the user's choice
+		
+		// If no parking spots available, print "Parking is full" and exit
+		// Otherwise display the submenu
+
+		if (m_Vcnt == m_lotSize) {
+			cout << "Parking is full";
+		}
+		else {
+			int selection = 0;
+			m_vehicleMenu.display();
+			if (!isEmpty()) {
+				cin >> selection;
+
+				switch (selection) {
+				case 1:
+					cout << "Parking Car" << endl;
+					// Dynamically create an instance of a car in a Vehicle pointer
+					Vehicle* temp = new Car();
+					// Set it NOT in CSV mode
+					temp->setCsv(false);
+					temp->read(cin);
+					// After receiving the Vehicle information from the console:
+					//	- Search through the Parking Spots array and find the first available (null) Parking Spot
+					bool found = false;
+					for (int i = 0; i < m_lotSize || found; i++) {
+						if (m_parkingSpots[i] != nullptr) {
+							//	- Set it to the Vehicle pointer and also
+							m_parkingSpots[i] = temp;
+							//	- It will set the Parking Spot member variable of the Vehicle to the spot number it was parkin in (index + 1) and prints
+							temp->setParkingSpot(i + 1);
+						}
+					}
+					//		"Parking ticket" endl
+					cout << "Parking ticket" << endl;
+					//	- And prints the vehicle
+					temp->write(cout);
+					break;
+				case 2:
+					cout << "Parking Motorcycle" << endl;
+					// Dynamically create an instance of a motorcycle in a Vehicle pointer
+					Vehicle* temp = new Motorcycle();
+					// Set it NOT in CSV mode
+					temp->setCsv(false);
+					temp->read(cin);
+					// After receiving the Vehicle information from the console:
+					//	- Search through the Parking Spots array and find the first available (null) Parking Spot
+					bool found = false;
+					for (int i = 0; i < m_lotSize || found; i++) {
+						if (m_parkingSpots[i] != nullptr) {
+							//	- Set it to the Vehicle pointer and also
+							m_parkingSpots[i] = temp;
+							//	- It will set the Parking Spot member variable of the Vehicle to the spot number it was parkin in (index + 1) and prints
+							temp->setParkingSpot(i + 1);
+						}
+					}
+					//		"Parking ticket" endl
+					cout << "Parking ticket" << endl;
+					//	- And prints the vehicle
+					temp->write(cout);
+					break;
+				case 3:
+					cout << "Cancelled parking" << endl;
+					break;
+				}
+			}
+		}
+		
 	}
 
 	Parking::~Parking() {
