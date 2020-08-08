@@ -96,6 +96,9 @@ namespace sdds {
 	void Parking::parkingStatus() const {
 		// message + EOL
 		cout << "****** Seneca Valet Parking ******" << endl;
+		cout << "Available spots: ";
+		cout << cout.setf(ios::left) << cout.width(4) << m_lotSize - m_Vcnt;
+		cout << cout.setf(ios::right) << " *****" << endl;
 	}
 
 	Parking::~Parking() {
