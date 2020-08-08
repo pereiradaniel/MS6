@@ -153,15 +153,42 @@ namespace sdds {
 		cout << "Returning Vehicle" << endl;
 
 		// Prompt the user for the license plate of the Vehicle that is to be returned:
-		// Receives the license plate vaue in a C-style character string between 1 to 8 chars.
-		//	- If the length of the license plate is less than 1 or more than 8:
-		//		print "Invalid Licence Plate, try, again: "
-		//		and receives the value again.
+		cout << "Enter Licence Plate Number: ";
+		// Receives the license plate value in a C-style character string between 1 to 8 chars.
+		string plateNumber;
+		cin >> plateNumber;
+
+		while (plateNumber.length() < 1 || plateNumber.length() > 8) {
+			//	- If the length of the license plate is less than 1 or more than 8:
+			//		print "Invalid Licence Plate, try, again: "
+			cout << "Invalid licence plate, try again: ";
+			//		and receives the value again.
+			cin >> plateNumber;
+		}
+		
 		// Search through the parked Vehicles for a matching license plate.
-		// If not found:
-		//	- print "License plate " and then the plate " Not found" ENDL
-		// - if found it will print "Returning: " and prints the Vehicle, then delete the
-		//		Vehicle from the memory and set the Parking Spot element back to nullptr.
+		bool found = false;
+		int index = 0;
+		for (int i = 0; i < m_lotSize || found; i++) {
+			if (m_parkingSpots[i]->getLicensePlate() == plateNumber) {
+				found == true;
+				index = i;
+			}
+		}
+
+		if (!found) {
+			// If not found:
+			//	- print "License plate " and then the plate " Not found" ENDL
+			cout << "Licence plate " + plateNumber + " Not found" << endl;
+		}
+		else {
+			// - if found it will print "Returning: " and prints the Vehicle, then delete the
+			//		Vehicle from the memory and set the Parking Spot element back to nullptr.
+			cout << "Returning: ";
+			m_parkingSpots[index]->write(std::cout);
+			delete m_parkingSpots[index];
+			m_parkingSpots[index] = nullptr;
+		}
 	}
 
 	Parking::~Parking() {
