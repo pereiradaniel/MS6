@@ -47,11 +47,6 @@ namespace sdds {
 		}
 	}
 
-	void Parking::returnVehicle() {
-		// message + EOL
-		cout << "Returning Vehicle" << endl;
-	}
-
 	void Parking::listParkedVehicles() {
 		// message + EOL
 		cout << "Listing Parked Vehicles" << endl;
@@ -151,6 +146,22 @@ namespace sdds {
 			}
 		}
 		
+	}
+	
+	void Parking::returnVehicle() {
+		// message + EOL
+		cout << "Returning Vehicle" << endl;
+
+		// Prompt the user for the license plate of the Vehicle that is to be returned:
+		// Receives the license plate vaue in a C-style character string between 1 to 8 chars.
+		//	- If the length of the license plate is less than 1 or more than 8:
+		//		print "Invalid Licence Plate, try, again: "
+		//		and receives the value again.
+		// Search through the parked Vehicles for a matching license plate.
+		// If not found:
+		//	- print "License plate " and then the plate " Not found" ENDL
+		// - if found it will print "Returning: " and prints the Vehicle, then delete the
+		//		Vehicle from the memory and set the Parking Spot element back to nullptr.
 	}
 
 	Parking::~Parking() {
