@@ -20,7 +20,7 @@ namespace sdds {
 		void	parkVehicle();					// modify - modified but not tested
 		void	returnVehicle();				// modify - modified but not tested
 		void	listParkedVehicles();			// modify - modified but not tested
-		bool	closeParking();					// modify
+		bool	closeParking();					// modify - modified but not tested
 		bool	exitParkingApp();				// no changes
 		bool	load();							// modify
 		void	save();							// modify
