@@ -7,10 +7,15 @@
 #include "Utils.h"
 using namespace std;
 namespace sdds {
-	Parking::Parking(const char* datafile, int lotSize) :
+	Parking::Parking(const char* datafile, int noOfSpots) :
 		m_datafile(nullptr),
 		m_parkingMenu("Parking Menu, select an action:"),
-		m_vehicleMenu("Select type of the vehicle:", 1) {
+		m_vehicleMenu("Select type of the vehicle:", 1){
+		// Set the value of m_lotSize to noOfSpots.
+		// If the number is invalid (less than 10 or more than MAX_NUM_SPOTS)  then parking is set to an invalid empty state.
+		if (noOfSpots < 10 || noOfSpots > MAX_LOT_SIZE) {
+			setEmpty();
+		}
 		// if parameter datafile is good
 		if (datafile != nullptr && datafile [0] != '\0') {
 			// allocate memory and copy string
@@ -116,6 +121,13 @@ namespace sdds {
 	void Parking::setEmpty() {
 		delete[] m_datafile;
 		m_datafile = nullptr;
+		delete[] m_parkingSpots;
+		// Set all parking spots to nullptr
+		int parkingSize = end(m_parkingSpots) - begin(m_parkingSpots);
+		for (int i = 0; i < parkingSize; i++) {
+			m_parkingSpots[i] = nullptr;
+		}
+		
 	}
 
 	int Parking::run() {

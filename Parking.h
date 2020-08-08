@@ -29,7 +29,7 @@ namespace sdds {
 		int findVehicle(const char* licPlate);	// new
 		Vehicle* getVehicle() const;			// new
 	public:
-		Parking(const char* datafile, int lotSize);		// modified
+		Parking(const char* datafile, int noOfSpots);	// modified - changed but not tested
 		Parking(const Parking&) = delete;
 		void operator=(const Parking&) = delete;
 		int run();										// no changes
