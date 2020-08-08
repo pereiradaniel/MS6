@@ -47,12 +47,6 @@ namespace sdds {
 		}
 	}
 
-	bool Parking::closeParking() {
-		// message + EOL
-		cout << "Closing Parking" << endl;
-		return true;
-	}
-
 	bool Parking::exitParkingApp() {
 		// call confirmed() function from Utils module
 		bool result = Utils::confirmed("terminate the program");
@@ -195,6 +189,31 @@ namespace sdds {
 				cout << "--------------------------------------------------------------" << endl;
 			}
 		}
+	}
+
+	bool Parking::closeParking() {
+		bool result;
+		if (isEmpty()) {
+			cout << "Closing Parking" << endl;
+			result = true;
+		}
+		else {
+			result = Utils::confirmed("Remove and tow all remaining Vehicles from the Parking", std::cin);
+			if (result == true) {
+				cout << "Closing Parking" << endl;
+				for (int i = 0; i < m_lotSize; i++) {
+					if (m_parkingSpots[i] != nullptr) {
+						cout << "Towing request" << endl;
+						cout << "*********************";
+						m_parkingSpots[i]->write(std::cout);
+						cout << endl;
+						delete m_parkingSpots[i];
+						m_parkingSpots[i] = nullptr;
+					}
+				}
+			}
+		}
+		return result;
 	}
 
 	Parking::~Parking() {
