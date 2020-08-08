@@ -10,7 +10,7 @@ namespace sdds {
 	class Vehicle : public ReadWritable {
 	private:
 		char	m_licensePlate[9];
-		char* m_makeModel;
+		char*	m_makeModel;
 		int		m_parkingSpot;
 	public:
 		Vehicle();

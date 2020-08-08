@@ -16,7 +16,7 @@ namespace sdds {
 	private:
 		bool	isEmpty() const;				// no changes
 		void	setEmpty();						// no changes
-		void	parkingStatus() const;			// modify
+		void	parkingStatus() const;			// modify - modified but not tested
 		void	parkVehicle();					// modify
 		void	returnVehicle();				// modify
 		void	listParkedVehicles();			// modify
@@ -33,7 +33,7 @@ namespace sdds {
 		Parking(const Parking&) = delete;
 		void operator=(const Parking&) = delete;
 		int run();										// no changes
-		~Parking();										// modified
+		~Parking();										// modified - changed but not tested
 	};
 }
 #endif
