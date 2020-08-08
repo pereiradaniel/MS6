@@ -216,15 +216,35 @@ namespace sdds {
 		return result;
 	}
 
+	bool Parking::load() {
+		bool result = false;
+		// Reads Vehicle records from the datafile and saves them in the corresponding Parking Spots.
+
+		if (!isEmpty()) {
+			// Using an instance of the ifstream class, open the file named in the filename member variable.
+			cout << "loading data from " << m_datafile << endl;
+			std::ifstream file(m_datafile);
+			
+			if (file) {
+				char ch;
+				while (file.get(ch)) {
+					cout << char(tolower(ch));
+				}
+			}
+		}
+		else {
+			// If the opening of the file was not successful or the Parking was in an empty state:
+			// - This function is in a good state (will return true when exits)
+			result = true;
+		}
+
+
+		return result;
+	}
+
 	Parking::~Parking() {
 		save();
 		setEmpty();
-	}
-
-	bool Parking::load() {
-		if (!isEmpty())
-			cout << "loading data from " << m_datafile << endl;
-		return (!isEmpty());
 	}
 
 	void Parking::save() {
