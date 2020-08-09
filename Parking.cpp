@@ -44,6 +44,7 @@ namespace sdds {
 			cout << "Error in data file" << endl;
 			// set empty state
 			m_datafile = nullptr;
+			m_lotSize = 0;
 		}
 	}
 
@@ -80,57 +81,67 @@ namespace sdds {
 			m_vehicleMenu.display();
 			if (!isEmpty()) {
 				cin >> selection;
-
+				Vehicle* temp = new Car();
 				switch (selection) {
 				case 1:
 					cout << "Parking Car" << endl;
 					// Dynamically create an instance of a car in a Vehicle pointer
-					Vehicle* temp = new Car();
 					// Set it NOT in CSV mode
 					temp->setCsv(false);
 					temp->read(cin);
 					// After receiving the Vehicle information from the console:
 					//	- Search through the Parking Spots array and find the first available (null) Parking Spot
 					bool found = false;
-					for (int i = 0; i < m_lotSize || found; i++) {
-						if (m_parkingSpots[i] != nullptr) {
+					for (int i = 0; i < m_lotSize || !found; i++) {
+						if (m_parkingSpots[i] == nullptr) {
 							//	- Set it to the Vehicle pointer and also
 							m_parkingSpots[i] = temp;
+							temp = nullptr;
+							m_Vcnt++;
 							//	- It will set the Parking Spot member variable of the Vehicle to the spot number it was parkin in (index + 1) and prints
 							temp->setParkingSpot(i + 1);
+							found = true;
+							//		"Parking ticket" endl
+							cout << "Parking ticket" << endl;
+							//	- And prints the vehicle
+							temp->write(cout);
+							cout << endl;
 						}
 					}
-					//		"Parking ticket" endl
-					cout << "Parking ticket" << endl;
-					//	- And prints the vehicle
-					temp->write(cout);
 					break;
 				case 2:
 					cout << "Parking Motorcycle" << endl;
 					// Dynamically create an instance of a motorcycle in a Vehicle pointer
-					Vehicle* temp = new Motorcycle();
 					// Set it NOT in CSV mode
 					temp->setCsv(false);
 					temp->read(cin);
 					// After receiving the Vehicle information from the console:
 					//	- Search through the Parking Spots array and find the first available (null) Parking Spot
 					bool found = false;
-					for (int i = 0; i < m_lotSize || found; i++) {
-						if (m_parkingSpots[i] != nullptr) {
+					for (int i = 0; i < m_lotSize || !found; i++) {
+						if (m_parkingSpots[i] == nullptr) {
 							//	- Set it to the Vehicle pointer and also
 							m_parkingSpots[i] = temp;
+							temp = nullptr;
+							m_Vcnt++;
 							//	- It will set the Parking Spot member variable of the Vehicle to the spot number it was parkin in (index + 1) and prints
 							temp->setParkingSpot(i + 1);
+							found = true;
+							//		"Parking ticket" endl
+							cout << "Parking ticket" << endl;
+							//	- And prints the vehicle
+							temp->write(cout);
+							cout << endl;
 						}
 					}
-					//		"Parking ticket" endl
-					cout << "Parking ticket" << endl;
-					//	- And prints the vehicle
-					temp->write(cout);
 					break;
 				case 3:
 					cout << "Cancelled parking" << endl;
 					break;
+				}
+				if (temp != nullptr) {
+					delete temp;
+					temp = nullptr;
 				}
 			}
 		}
@@ -139,44 +150,47 @@ namespace sdds {
 	
 	void Parking::returnVehicle() {
 		// message + EOL
-		cout << "Returning Vehicle" << endl;
+		cout << "Return Vehicle" << endl;
 
 		// Prompt the user for the license plate of the Vehicle that is to be returned:
 		cout << "Enter Licence Plate Number: ";
 		// Receives the license plate value in a C-style character string between 1 to 8 chars.
-		string plateNumber;
-		cin >> plateNumber;
+		char plateNumber[10];
+		bool check = false;
 
-		while (plateNumber.length() < 1 || plateNumber.length() > 8) {
-			//	- If the length of the license plate is less than 1 or more than 8:
-			//		print "Invalid Licence Plate, try, again: "
-			cout << "Invalid licence plate, try again: ";
-			//		and receives the value again.
+		do {
+			cout << "Enter Licence Plate Number: ";
 			cin >> plateNumber;
-		}
-		
-		// Search through the parked Vehicles for a matching license plate.
-		bool found = false;
-		int index = 0;
-		for (int i = 0; i < m_lotSize || found; i++) {
-			if (m_parkingSpots[i]->getLicensePlate() == plateNumber) {
-				found == true;
-				index = i;
+
+			if (strlen(plateNumber) < 1 || strlen(plateNumber) > 8) {
+				cout << "Invalid Licence Plate, try again: ";
 			}
+			else {
+				check = true;
+			}
+			cout << endl;
+		} while (!check);
+
+		for (unsigned int i = 0; i < strlen(plateNumber); i++) {
+			plateNumber[i] = toupper(plateNumber[i]);
 		}
 
-		if (!found) {
-			// If not found:
-			//	- print "License plate " and then the plate " Not found" ENDL
-			cout << "Licence plate " + plateNumber + " Not found" << endl;
-		}
-		else {
-			// - if found it will print "Returning: " and prints the Vehicle, then delete the
-			//		Vehicle from the memory and set the Parking Spot element back to nullptr.
-			cout << "Returning: ";
-			m_parkingSpots[index]->write(std::cout);
-			delete m_parkingSpots[index];
-			m_parkingSpots[index] = nullptr;
+		bool found = false;
+		for (int i = 0; i < m_lotSize && found == false; i++) {
+
+			if (m_parkingSpots[i] != nullptr && *m_parkingSpots[i] == plateNumber) {
+				m_parkingSpots[i]->setCsv(false);
+				cout << "Returning: \n";
+				m_parkingSpots[i]->write(std::cout);
+				cout << endl;
+				delete m_parkingSpots[i];
+				m_parkingSpots[i] = nullptr;
+				m_Vcnt--;
+				found = true;
+			}
+			else if (i == (m_lotSize - 1)) {
+				cout << "License plate " << plateNumber << " Not found" << endl;
+			}
 		}
 	}
 
@@ -186,7 +200,7 @@ namespace sdds {
 		for (int i = 0; i < m_lotSize; i++) {
 			if (m_parkingSpots[i] != nullptr) {
 				m_parkingSpots[i]->write(std::cout);
-				cout << "--------------------------------------------------------------" << endl;
+				cout << "-------------------------------" << endl;
 			}
 		}
 	}
@@ -216,20 +230,108 @@ namespace sdds {
 		return result;
 	}
 
-	Parking::~Parking() {
-		save();
-		setEmpty();
+	bool Parking::load() {
+		bool result = false;
+		bool goodState = false;
+		bool same = false;
+		Vehicle* vehicle = nullptr;
+		
+		char nullEnd = '\0';
+		int number = 0;
+		
+		std::ifstream file("ParkingData.csv.bak");
+		
+		if (!isEmpty()) {
+			result = true;
+			
+			if (file.fail()) file.clear();
+			if (file.is_open()) file.close();
+
+			file.open(m_datafile, ios::in);
+			if (file) {
+
+				do {
+					vehicle = nullptr;
+					nullEnd = '\0';
+					file.get(nullEnd);
+					file.ignore(8, ',');
+
+					if (toupper(nullEnd) == 'C') {
+
+						vehicle = new Car();
+						goodState = true;
+
+					}
+					else if (toupper(nullEnd) == 'M') {
+						vehicle = new Motorcycle();
+						goodState = true;
+					}
+
+					if (goodState) {
+						vehicle->setCsv(true);
+						vehicle->read(file);
+						if (vehicle != nullptr) {
+							int n = vehicle->getParkingSpot();
+							m_parkingSpots[(n - 1)] = vehicle;
+							m_Vcnt++;
+							result = true;
+							vehicle = nullptr;
+						}
+						else {
+							delete vehicle;
+							vehicle = nullptr;
+							result = false;
+						}
+					}
+					goodState = false;
+					number++;
+				} while (number < m_lotSize && result == true);
+			}
+		}
+		else {
+			result = true;
+		}
+		for (int i = 0; i < m_lotSize && !same; i++) {
+			if (vehicle != nullptr && *vehicle == *m_parkingSpots[i]) {
+				same = true;
+			}
+		}
+		if (!same && vehicle != nullptr) {
+			delete vehicle;
+			vehicle = nullptr;
+		}
+		file.close();
+		return result;
 	}
 
-	bool Parking::load() {
-		if (!isEmpty())
-			cout << "loading data from " << m_datafile << endl;
-		return (!isEmpty());
+	Parking::~Parking() {
+		save();
+		delete[] m_datafile;
+		m_datafile = nullptr;
+		for (int i = 0; i < m_lotSize; i++) {
+			delete m_parkingSpots[i];
+			m_parkingSpots[i] = nullptr;
+		}
 	}
 
 	void Parking::save() {
-		if (!isEmpty())
-			cout << "Saving data into " << m_datafile << endl;
+		if (!isEmpty()) {
+			ofstream fout("ParkingData.csv.bak");
+
+			if (fout.fail()) fout.clear();
+			if (fout.is_open()) fout.close();
+
+			fout.open(m_datafile, ios::out);
+			if (fout.is_open()) {
+				for (int i = 0; i < m_lotSize; i++) {
+					if (m_parkingSpots[i] != nullptr) {
+						m_parkingSpots[i]->setCsv(true);
+						m_parkingSpots[i]->write(fout);
+					}
+				}
+				fout.close();
+			}
+		}
 	}
 
 	bool Parking::isEmpty() const {
