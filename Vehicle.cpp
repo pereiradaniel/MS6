@@ -87,20 +87,22 @@ namespace sdds {
 	}
 
 	istream& Vehicle::read(istream& istr) {
+		// char t_parkingSpot[9];
+		char t_licensePlate[MAX_PLATE_CHARS + 1];
+		char t_makeModel[MAX_MAKE_MODEL_CHARS + 1];
+
 		if (isCsv()) {
-			char t_parkingSpot[9];
-			istr.get(t_parkingSpot, 9, ',');
+			
+			istr >> m_parkingSpot;
+			istr.ignore();
+
+			istr.get(t_licensePlate, MAX_PLATE_CHARS + 1, ',');
 			istr.ignore(2000, ',');
 
-			char t_licensePlate[9];
-			istr.get(t_licensePlate, 9, ',');
+			istr.getline(t_makeModel, MAX_MAKE_MODEL_CHARS + 1, ',');
 			istr.ignore(2000, ',');
 
-			char t_makeModel[61];
-			istr.get(t_makeModel, 61, ',');
-			istr.ignore(2000, ',');
-
-			m_parkingSpot = stoi(t_parkingSpot);
+			// m_parkingSpot = stoi(t_parkingSpot);
 			strcpy(m_licensePlate, t_licensePlate);
 			if (m_licensePlate[0] != '\0') {
 				Utils::toUpper(m_licensePlate);
@@ -109,13 +111,11 @@ namespace sdds {
 		}
 		else if (!isCsv()) {
 			cout << "Enter Licence Plate Number: ";
-			char t_licensePlate[9];
 			Utils::read(t_licensePlate, MAX_PLATE_CHARS, "Invalid Licence Plate, try again: ", istr);
 			strcpy(m_licensePlate, t_licensePlate);
 			Utils::toUpper(m_licensePlate);
 
 			cout << "Enter Make and Model: ";
-			char t_makeModel[MAX_MAKE_MODEL_CHARS + 1];
 			Utils::read(t_makeModel, MIN_MAKE_MODEL_CHARS, MAX_MAKE_MODEL_CHARS, "Invalid Make and model, try again: ", istr);
 			setMakeModel(t_makeModel);
 
