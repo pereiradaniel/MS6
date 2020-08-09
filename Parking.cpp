@@ -218,27 +218,75 @@ namespace sdds {
 
 	bool Parking::load() {
 		bool result = false;
-		// Reads Vehicle records from the datafile and saves them in the corresponding Parking Spots.
-
+		bool goodState = false;
+		bool same = false;
+		Vehicle* vehicle = nullptr;
+		
+		char nullEnd = '\0';
+		int number = 0;
+		
+		std::ifstream file("ParkingData.csv.bak");
+		
 		if (!isEmpty()) {
-			// Using an instance of the ifstream class, open the file named in the filename member variable.
-			cout << "loading data from " << m_datafile << endl;
-			std::ifstream file(m_datafile);
+			result = true;
 			
+			if (file.fail()) file.clear();
+			if (file.is_open()) file.close();
+
+			file.open(m_datafile, ios::in);
 			if (file) {
-				char ch;
-				while (file.get(ch)) {
-					cout << char(tolower(ch));
-				}
+
+				do {
+					vehicle = nullptr;
+					nullEnd = '\0';
+					file.get(nullEnd);
+					file.ignore(8, ',');
+
+					if (toupper(nullEnd) == 'C') {
+
+						vehicle = new Car();
+						goodState = true;
+
+					}
+					else if (toupper(nullEnd) == 'M') {
+						vehicle = new Motorcycle();
+						goodState = true;
+					}
+
+					if (goodState) {
+						vehicle->setCsv(true);
+						vehicle->read(file);
+						if (vehicle != nullptr) {
+							int n = vehicle->getParkingSpot();
+							m_parkingSpots[(n - 1)] = vehicle;
+							m_Vcnt++;
+							result = true;
+							vehicle = nullptr;
+						}
+						else {
+							delete vehicle;
+							vehicle = nullptr;
+							result = false;
+						}
+					}
+					goodState = false;
+					number++;
+				} while (number < m_lotSize && result == true);
 			}
 		}
 		else {
-			// If the opening of the file was not successful or the Parking was in an empty state:
-			// - This function is in a good state (will return true when exits)
 			result = true;
 		}
-
-
+		for (int i = 0; i < m_lotSize && !same; i++) {
+			if (vehicle != nullptr && *vehicle == *m_parkingSpots[i]) {
+				same = true;
+			}
+		}
+		if (!same && vehicle != nullptr) {
+			delete vehicle;
+			vehicle = nullptr;
+		}
+		file.close();
 		return result;
 	}
 
