@@ -82,6 +82,7 @@ namespace sdds {
 			if (!isEmpty()) {
 				cin >> selection;
 				Vehicle* temp = new Car();
+				bool found = false;
 				switch (selection) {
 				case 1:
 					cout << "Parking Car" << endl;
@@ -91,7 +92,6 @@ namespace sdds {
 					temp->read(cin);
 					// After receiving the Vehicle information from the console:
 					//	- Search through the Parking Spots array and find the first available (null) Parking Spot
-					bool found = false;
 					for (int i = 0; i < m_lotSize || !found; i++) {
 						if (m_parkingSpots[i] == nullptr) {
 							//	- Set it to the Vehicle pointer and also
@@ -104,7 +104,7 @@ namespace sdds {
 							//		"Parking ticket" endl
 							cout << "Parking ticket" << endl;
 							//	- And prints the vehicle
-							temp->write(cout);
+							m_parkingSpots[i]->write(cout);
 							cout << endl;
 						}
 					}
@@ -117,7 +117,6 @@ namespace sdds {
 					temp->read(cin);
 					// After receiving the Vehicle information from the console:
 					//	- Search through the Parking Spots array and find the first available (null) Parking Spot
-					bool found = false;
 					for (int i = 0; i < m_lotSize || !found; i++) {
 						if (m_parkingSpots[i] == nullptr) {
 							//	- Set it to the Vehicle pointer and also
@@ -130,7 +129,7 @@ namespace sdds {
 							//		"Parking ticket" endl
 							cout << "Parking ticket" << endl;
 							//	- And prints the vehicle
-							temp->write(cout);
+							m_parkingSpots[i]->write(cout);
 							cout << endl;
 						}
 					}
@@ -196,9 +195,10 @@ namespace sdds {
 
 	void Parking::listParkedVehicles() {
 		// message + EOL
-		cout << "Listing Parked Vehicles" << endl;
+		cout << "***List of parked vehicles ***" << endl;
 		for (int i = 0; i < m_lotSize; i++) {
 			if (m_parkingSpots[i] != nullptr) {
+				m_parkingSpots[i]->setCsv(false);
 				m_parkingSpots[i]->write(std::cout);
 				cout << "-------------------------------" << endl;
 			}
@@ -341,7 +341,7 @@ namespace sdds {
 	void Parking::setEmpty() {
 		delete[] m_datafile;
 		m_datafile = nullptr;
-		delete[] m_parkingSpots;
+		delete[] *m_parkingSpots;
 		// Set all parking spots to nullptr
 		int parkingSize = end(m_parkingSpots) - begin(m_parkingSpots);
 		for (int i = 0; i < parkingSize; i++) {
