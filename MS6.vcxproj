@@ -159,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ParkingData.csv" />
+    <None Include="ParkingData.csv.bak" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

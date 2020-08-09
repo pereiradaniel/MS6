@@ -67,5 +67,8 @@
     <None Include="ParkingData.csv">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="ParkingData.csv.bak">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
