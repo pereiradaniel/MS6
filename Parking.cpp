@@ -14,10 +14,7 @@ namespace sdds {
 		m_parkingMenu("Parking Menu, select an action:"),
 		m_vehicleMenu("Select type of the vehicle:", 1){
 		// Set the value of m_lotSize to noOfSpots.
-		// If the number is invalid (less than 10 or more than MAX_NUM_SPOTS)  then parking is set to an invalid empty state.
-		if (noOfSpots < 10 || noOfSpots > MAX_LOT_SIZE) {
-			setEmpty();
-		}
+		m_lotSize = noOfSpots;
 		// if parameter datafile is good
 		if (datafile != nullptr && datafile [0] != '\0') {
 			// allocate memory and copy string
