@@ -17,10 +17,11 @@ namespace sdds {
 		// Set the value of m_lotSize to noOfSpots.
 		m_lotSize = noOfSpots;
 		// if parameter datafile is good
-		if (datafile != nullptr && datafile [0] != '\0') {
+		if (datafile != nullptr && datafile [0] != '\0' && noOfSpots >= MIN_LOT_SIZE && noOfSpots <= MAX_LOT_SIZE) {
 			// allocate memory and copy string
 			m_datafile = new char[strlen(datafile) + 1];
 			strcpy(m_datafile, datafile);
+			m_lotSize = noOfSpots;
 		}
 		if (load()) {
 			// add to parking menu 5 items (first page of WS documentation)
@@ -61,8 +62,8 @@ namespace sdds {
 		// message + EOL
 		int availSpots = m_lotSize - m_Vcnt;
 		cout << "****** Seneca Valet Parking ******" << endl;
-		cout << "*****  Available spots: ";
-		cout << setw(4) << left << availSpots << " *****" << endl;
+        cout << "*****  Available spots: ";
+        cout << setw(4) << left << availSpots << " *****" << endl;
 	}
 
 	void Parking::parkVehicle() {

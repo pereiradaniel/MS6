@@ -5,6 +5,7 @@
 
 namespace sdds {
 	const int	MAX_LOT_SIZE = 100;
+	const int	MIN_LOT_SIZE = 10;
 	class Parking {
 	private:
 		char*	m_datafile;						// may be nullptr -> Parking in empty state
