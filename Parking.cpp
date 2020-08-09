@@ -67,67 +67,51 @@ namespace sdds {
 	}
 
 	void Parking::parkVehicle() {
-		// run the vehicle menu save the user's choice
-		
-		// If no parking spots available, print "Parking is full" and exit
-		// Otherwise display the submenu
+		Vehicle* temp = new Car();
+		bool found = false;
 
 		if (m_Vcnt == m_lotSize) {
-			cout << "Parking is full";
+			cout << "Parking is full" << endl;
 		}
 		else {
 			int selection = 0;
 			m_vehicleMenu.display();
+		
 			if (!isEmpty()) {
 				cin >> selection;
-				Vehicle* temp = new Car();
-				bool found = false;
 				switch (selection) {
 				case 1:
-					cout << "Parking Car" << endl;
-					// Dynamically create an instance of a car in a Vehicle pointer
-					// Set it NOT in CSV mode
+
+					temp = new Car;
 					temp->setCsv(false);
 					temp->read(cin);
-					// After receiving the Vehicle information from the console:
-					//	- Search through the Parking Spots array and find the first available (null) Parking Spot
-					for (int i = 0; i < m_lotSize || !found; i++) {
+
+					for (int i = 0; i < m_lotSize && !found; i++) {
 						if (m_parkingSpots[i] == nullptr) {
-							//	- Set it to the Vehicle pointer and also
 							m_parkingSpots[i] = temp;
 							temp = nullptr;
 							m_Vcnt++;
-							//	- It will set the Parking Spot member variable of the Vehicle to the spot number it was parkin in (index + 1) and prints
-							temp->setParkingSpot(i + 1);
+							m_parkingSpots[i]->setParkingSpot(i + 1);
 							found = true;
-							//		"Parking ticket" endl
 							cout << "Parking ticket" << endl;
-							//	- And prints the vehicle
 							m_parkingSpots[i]->write(cout);
 							cout << endl;
 						}
 					}
 					break;
 				case 2:
-					cout << "Parking Motorcycle" << endl;
-					// Dynamically create an instance of a motorcycle in a Vehicle pointer
-					// Set it NOT in CSV mode
+					temp = new Motorcycle;
 					temp->setCsv(false);
 					temp->read(cin);
-					// After receiving the Vehicle information from the console:
-					//	- Search through the Parking Spots array and find the first available (null) Parking Spot
-					for (int i = 0; i < m_lotSize || !found; i++) {
+
+					for (int i = 0; i < m_lotSize && !found; i++) {
 						if (m_parkingSpots[i] == nullptr) {
-							//	- Set it to the Vehicle pointer and also
 							m_parkingSpots[i] = temp;
 							temp = nullptr;
 							m_Vcnt++;
-							//	- It will set the Parking Spot member variable of the Vehicle to the spot number it was parkin in (index + 1) and prints
-							temp->setParkingSpot(i + 1);
+							m_parkingSpots[i]->setParkingSpot(i + 1);
 							found = true;
-							//		"Parking ticket" endl
 							cout << "Parking ticket" << endl;
-							//	- And prints the vehicle
 							m_parkingSpots[i]->write(cout);
 							cout << endl;
 						}
