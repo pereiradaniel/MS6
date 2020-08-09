@@ -12,7 +12,8 @@ namespace sdds {
 	Parking::Parking(const char* datafile, int noOfSpots) :
 		m_datafile(nullptr),
 		m_parkingMenu("Parking Menu, select an action:"),
-		m_vehicleMenu("Select type of the vehicle:", 1){
+		m_vehicleMenu("Select type of the vehicle:", 1),
+		m_Vcnt(0) {
 		// Set the value of m_lotSize to noOfSpots.
 		m_lotSize = noOfSpots;
 		// if parameter datafile is good
@@ -58,10 +59,10 @@ namespace sdds {
 
 	void Parking::parkingStatus() const {
 		// message + EOL
+		int availSpots = m_lotSize - m_Vcnt;
 		cout << "****** Seneca Valet Parking ******" << endl;
-		cout << "Available spots: ";
-		cout << cout.setf(ios::left) << cout.width(4) << m_lotSize - m_Vcnt;
-		cout << cout.setf(ios::right) << " *****" << endl;
+		cout << "*****  Available spots: ";
+		cout << setw(4) << left << availSpots << " *****" << endl;
 	}
 
 	void Parking::parkVehicle() {
