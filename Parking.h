@@ -17,23 +17,23 @@ namespace sdds {
 		bool	isEmpty() const;				// no changes
 		void	setEmpty();						// no changes
 		void	parkingStatus() const;			// modify - modified but not tested
-		void	parkVehicle();					// modify - modified but not tested
-		void	returnVehicle();				// modify - modified but not tested
-		void	listParkedVehicles();			// modify - modified but not tested
-		bool	closeParking();					// modify - modified but not tested
+		void	parkVehicle();					// modify - modified but not tested x
+		void	returnVehicle();				// modify - modified but not tested x
+		void	listParkedVehicles();			// modify - modified but not tested x
+		bool	closeParking();					// modify - modified but not tested x
 		bool	exitParkingApp();				// no changes
-		bool	load();							// modify
-		void	save();							// modify
-		bool moveToParkingSpot(Vehicle* V);		// new
-		void endOfDay();						// new
-		int findVehicle(const char* licPlate);	// new
-		Vehicle* getVehicle() const;			// new
+		bool	load();							// modify x
+		void	save();							// modify x
+		//bool moveToParkingSpot(Vehicle* V);		// new
+		//void endOfDay();						// new
+		//int findVehicle(const char* licPlate);	// new
+		//Vehicle* getVehicle() const;			// new
 	public:
-		Parking(const char* datafile, int noOfSpots);	// modified - changed but not tested
+		Parking(const char* datafile, int noOfSpots);	// modified - changed but not tested x
 		Parking(const Parking&) = delete;
 		void operator=(const Parking&) = delete;
 		int run();										// no changes
-		~Parking();										// modified - changed but not tested
+		~Parking();										// modified - changed but not tested x
 	};
 }
 #endif
