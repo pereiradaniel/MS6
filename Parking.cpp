@@ -131,14 +131,11 @@ namespace sdds {
 	}
 	
 	void Parking::returnVehicle() {
-		// message + EOL
 		cout << "Return Vehicle" << endl;
 
-		// Prompt the user for the license plate of the Vehicle that is to be returned:
-		cout << "Enter Licence Plate Number: ";
-		// Receives the license plate value in a C-style character string between 1 to 8 chars.
 		char plateNumber[10];
 		bool check = false;
+		bool found = false;
 
 		do {
 			cout << "Enter Licence Plate Number: ";
@@ -153,22 +150,23 @@ namespace sdds {
 			cout << endl;
 		} while (!check);
 
-		for (unsigned int i = 0; i < strlen(plateNumber); i++) {
-			plateNumber[i] = toupper(plateNumber[i]);
-		}
+		Utils::toUpper(plateNumber);
 
-		bool found = false;
+		//for (unsigned int i = 0; i < strlen(plateNumber); i++) {
+		//	plateNumber[i] = toupper(plateNumber[i]);
+		//}
+
 		for (int i = 0; i < m_lotSize && found == false; i++) {
 
 			if (m_parkingSpots[i] != nullptr && *m_parkingSpots[i] == plateNumber) {
+				found = true;
 				m_parkingSpots[i]->setCsv(false);
-				cout << "Returning: \n";
+				cout << "Returning: " << endl;
 				m_parkingSpots[i]->write(std::cout);
 				cout << endl;
 				delete m_parkingSpots[i];
 				m_parkingSpots[i] = nullptr;
 				m_Vcnt--;
-				found = true;
 			}
 			else if (i == (m_lotSize - 1)) {
 				cout << "License plate " << plateNumber << " Not found" << endl;

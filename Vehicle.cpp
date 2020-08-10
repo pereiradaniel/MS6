@@ -70,12 +70,12 @@ namespace sdds {
 
 	bool Vehicle::operator==(const char* licensePlate) const {
 		bool result = false;
-		if (!isEmpty() && licensePlate != nullptr && licensePlate[0] != '\0' && strlen(licensePlate) <= MAX_PLATE_CHARS) {
+		if (licensePlate[0] != '\0' && strlen(m_licensePlate) == strlen(licensePlate)) {
 			char temp[MAX_PLATE_CHARS + 1];
 			// temp = new char[MAX_PLATE_CHARS + 1];
 			strcpy(temp, licensePlate);
-			// Utils::toUpper(temp);
-			if (strcmp(temp, licensePlate) == 0) {
+			Utils::toUpper(temp);
+			if (strcmp(temp, m_licensePlate) == 0) {
 				result = true;
 			}
 		}
@@ -88,12 +88,14 @@ namespace sdds {
 
 	istream& Vehicle::read(istream& istr) {
 		char t_licensePlate[MAX_PLATE_CHARS + 1];
-		char t_parkingSpot[MAX_PLATE_CHARS + 1];
+		// char t_parkingSpot[MAX_PLATE_CHARS + 1];
 		char t_makeModel[MAX_MAKE_MODEL_CHARS + 1];
 
 		if (isCsv()) {
-			istr.get(t_parkingSpot, MAX_PLATE_CHARS + 1, ',');
-			istr.ignore(2000, ',');
+			istr >> m_parkingSpot;
+			istr.ignore();
+			/*istr.get(t_parkingSpot, MAX_PLATE_CHARS + 1, ',');
+			istr.ignore(2000, ',');*/
 
 			
 			istr.get(t_licensePlate, 9, ',');
@@ -102,7 +104,7 @@ namespace sdds {
 			istr.get(t_makeModel, MAX_MAKE_MODEL_CHARS + 1, ',');
 			istr.ignore(2000, ',');
 
-			m_parkingSpot = stoi(t_parkingSpot);
+			// m_parkingSpot = stoi(t_parkingSpot);
 			strcpy(m_licensePlate, t_licensePlate);
 			if (m_licensePlate[0] != '\0') {
 				Utils::toUpper(m_licensePlate);
