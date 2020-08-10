@@ -49,7 +49,9 @@ namespace sdds {
 
 	bool Parking::exitParkingApp() {
 		// call confirmed() function from Utils module
-		bool result = Utils::confirmed("terminate the program");
+		bool result = false;
+		cin.ignore();
+		result = Utils::confirmed("terminate the program");
 		// if it returns true, print 'Exiting program!' + EOL and return true
 		if (result == true) {
 			cout << "Exiting program!" << endl;
@@ -111,7 +113,7 @@ namespace sdds {
 							m_Vcnt++;
 							m_parkingSpots[i]->setParkingSpot(i + 1);
 							found = true;
-							cout << "Parking ticket" << endl;
+							cout << endl << "Parking ticket" << endl;
 							m_parkingSpots[i]->write(cout);
 							cout << endl;
 						}
@@ -334,7 +336,7 @@ namespace sdds {
 	int Parking::run() {
 		bool done = false;
 		int selection = 0;
-		while (!isEmpty() && !done) {
+		do {
 			// parking status mesage
 			parkingStatus();
 			// run parking menu save the result in selection variable
@@ -363,7 +365,7 @@ namespace sdds {
 					break;
 				}
 			}
-		}
+		} while (true);
 		return selection;
 	}
 }

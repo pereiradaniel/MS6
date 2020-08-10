@@ -66,7 +66,6 @@ namespace sdds {
         char res;
         char newline;
         do {
-            is.ignore();
             res = is.get();
             newline = is.get();
             if (newline != '\n') {
