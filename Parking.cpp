@@ -95,7 +95,7 @@ namespace sdds {
 							m_Vcnt++;
 							m_parkingSpots[i]->setParkingSpot(i + 1);
 							found = true;
-							cout << "Parking ticket" << endl;
+							cout << endl << "Parking ticket" << endl;
 							m_parkingSpots[i]->write(cout);
 							cout << endl;
 						}
@@ -178,7 +178,7 @@ namespace sdds {
 
 	void Parking::listParkedVehicles() {
 		// message + EOL
-		cout << "***List of parked vehicles ***" << endl;
+		cout << "*** List of parked vehicles ***" << endl;
 		for (int i = 0; i < m_lotSize; i++) {
 			if (m_parkingSpots[i] != nullptr) {
 				m_parkingSpots[i]->setCsv(false);
@@ -191,7 +191,7 @@ namespace sdds {
 	bool Parking::closeParking() {
 		bool result;
 		if (isEmpty()) {
-			cout << "Closing Parking" << endl << endl;
+			cout << "Closing Parking" << endl;
 			result = true;
 		}
 		else {
@@ -201,10 +201,10 @@ namespace sdds {
 				cout << "Closing Parking" << endl;
 				for (int i = 0; i < m_lotSize; i++) {
 					if (m_parkingSpots[i] != nullptr) {
-						cout << "Towing request" << endl;
-						cout << "*********************";
-						m_parkingSpots[i]->write(std::cout);
 						cout << endl;
+						cout << "Towing request" << endl;
+						cout << "*********************" << endl;
+						m_parkingSpots[i]->write(std::cout);
 						delete m_parkingSpots[i];
 						m_parkingSpots[i] = nullptr;
 					}
