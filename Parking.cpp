@@ -14,54 +14,41 @@ namespace sdds {
 		m_parkingMenu("Parking Menu, select an action:"),
 		m_vehicleMenu("Select type of the vehicle:", 1),
 		m_Vcnt(0) {
-		// Set the value of m_lotSize to noOfSpots.
 		m_lotSize = noOfSpots;
-		// if parameter datafile is good
 		if (datafile != nullptr && datafile [0] != '\0' && noOfSpots >= MIN_LOT_SIZE && noOfSpots <= MAX_LOT_SIZE) {
-			// allocate memory and copy string
 			m_datafile = new char[strlen(datafile) + 1];
 			strcpy(m_datafile, datafile);
 			m_lotSize = noOfSpots;
 		}
 		if (load()) {
-			// add to parking menu 5 items (first page of WS documentation)
-			// no numbers, dashes or spaces!
 			m_parkingMenu.add("Park Vehicle");
 			m_parkingMenu.add("Return Vehicle");
 			m_parkingMenu.add("List Parked Vehicles");
 			m_parkingMenu.add("Close Parking (End of day)");
 			m_parkingMenu.add("Exit Program");
 
-			// add to vehicle menu 3 items (first page of WS documentation)
-			// no numbers, dashes or spaces!
 			m_vehicleMenu.add("Car");
 			m_vehicleMenu.add("Motorcycle");
 			m_vehicleMenu.add("Cancel");
 		}
 		else {
-			// message 'Error in data file'
 			cout << "Error in data file" << endl;
-			// set empty state
 			m_datafile = nullptr;
 			m_lotSize = 0;
 		}
 	}
 
 	bool Parking::exitParkingApp() {
-		// call confirmed() function from Utils module
 		bool result = false;
 		cin.ignore();
 		result = Utils::confirmed("terminate the program");
-		// if it returns true, print 'Exiting program!' + EOL and return true
 		if (result == true) {
 			cout << "Exiting program!" << endl;
 		}
-		// otherwise return false
 		return result;
 	}
 
 	void Parking::parkingStatus() const {
-		// message + EOL
 		int availSpots = m_lotSize - m_Vcnt;
 		cout << "****** Seneca Valet Parking ******" << endl;
         cout << "*****  Available spots: ";
@@ -154,10 +141,6 @@ namespace sdds {
 
 		Utils::toUpper(plateNumber);
 
-		//for (unsigned int i = 0; i < strlen(plateNumber); i++) {
-		//	plateNumber[i] = toupper(plateNumber[i]);
-		//}
-
 		for (int i = 0; i < m_lotSize && found == false; i++) {
 
 			if (m_parkingSpots[i] != nullptr && *m_parkingSpots[i] == plateNumber) {
@@ -177,7 +160,6 @@ namespace sdds {
 	}
 
 	void Parking::listParkedVehicles() {
-		// message + EOL
 		cout << "*** List of parked vehicles ***" << endl;
 		for (int i = 0; i < m_lotSize; i++) {
 			if (m_parkingSpots[i] != nullptr) {
@@ -326,7 +308,6 @@ namespace sdds {
 		delete[] m_datafile;
 		m_datafile = nullptr;
 		delete[] *m_parkingSpots;
-		// Set all parking spots to nullptr
 		int parkingSize = end(m_parkingSpots) - begin(m_parkingSpots);
 		for (int i = 0; i < parkingSize; i++) {
 			m_parkingSpots[i] = nullptr;
@@ -338,13 +319,9 @@ namespace sdds {
 		bool done = false;
 		int selection = 0;
 		do {
-			// parking status mesage
 			parkingStatus();
-			// run parking menu save the result in selection variable
 			m_parkingMenu.display();
 			cin >> selection;
-			// depending on selection:  part or return or list or clsoe or exit
-			// when you call the last two save the result in done variable
 			if (selection == 1) {
 				parkVehicle();
 			}

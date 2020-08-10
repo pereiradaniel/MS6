@@ -20,8 +20,8 @@ namespace sdds {
 		virtual ~Vehicle();
 		void			setEmpty();
 		bool			isEmpty()const;
-		const char* getLicensePlate()const;
-		const char* getMakeModel()const;
+		const char*		getLicensePlate()const;
+		const char*		getMakeModel()const;
 		void			setMakeModel(const char* value);
 		int				getParkingSpot()const;
 		void			setParkingSpot(int value);
