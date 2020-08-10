@@ -191,10 +191,11 @@ namespace sdds {
 	bool Parking::closeParking() {
 		bool result;
 		if (isEmpty()) {
-			cout << "Closing Parking" << endl;
+			cout << "Closing Parking" << endl << endl;
 			result = true;
 		}
 		else {
+			cin.ignore();
 			result = Utils::confirmed("Remove and tow all remaining Vehicles from the Parking", std::cin);
 			if (result == true) {
 				cout << "Closing Parking" << endl;
